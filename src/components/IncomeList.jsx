@@ -1,18 +1,11 @@
-import {Download, LoaderCircle, Mail} from "lucide-react";
+import {Download, LoaderCircle} from "lucide-react";
 import TransactionInfoCard from "./TransactionInfoCard.jsx";
 import moment from "moment";
 import {useState} from "react";
 
-const IncomeList = ({transactions, onDelete, onDownload, onEmail}) => {
+const IncomeList = ({transactions, onDelete, onDownload}) => {
     const [loading, setLoading] = useState(false);
-    const handleEmail = async () => {
-        setLoading(true);
-        try {
-            await onEmail();
-        }finally {
-            setLoading(false);
-        }
-    }
+
     const handleDownload = async () => {
         setLoading(true);
         try {
@@ -26,19 +19,7 @@ const IncomeList = ({transactions, onDelete, onDownload, onEmail}) => {
             <div className="flex items-center justify-between">
                 <h5 className="text-lg">Income Sources</h5>
                 <div className="flex items-center justify-end gap-2">
-                    <button disabled={loading} className="card-btn" onClick={handleEmail}>
-                        {loading ? (
-                            <>
-                                <LoaderCircle className="w-4 h-4 animate-spin"/>
-                                Emailing...
-                            </>
-                        ): (
-                            <>
-                                <Mail size={15} className="text-base" />
-                                Email
-                            </>
-                        )}
-                    </button>
+
                     <button disabled={loading} className="card-btn" onClick={handleDownload}>
                         {loading ? (
                             <>
