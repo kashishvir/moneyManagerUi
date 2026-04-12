@@ -61,6 +61,7 @@ const Login = () => {
 
     }
 
+    return (
         <div className="h-screen w-full flex flex-col bg-slate-50 relative overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div>
@@ -124,6 +125,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
+    )
 }
 
 export default Login;

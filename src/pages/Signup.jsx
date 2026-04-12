@@ -62,15 +62,22 @@ const Signup = () => {
                 profileImageUrl
             })
             if (response.status === 201) {
-                toast.success("Account created! Please check your email to activate it.", { duration: 6000 });
+                toast.success(
+                    `✅ Account created! A verification email has been sent to ${email}. Please check your inbox (and spam folder) to activate your account.`,
+                    { duration: 8000 }
+                );
                 navigate("/login");
             }
         } catch(err) {
             console.error('Something went wrong', err);
-            if (err.response && err.response.status === 500) {
+            if (err.response && err.response.status === 409) {
                 setError("This email is already registered. Please login instead.");
+            } else if (err.response && err.response.status === 500) {
+                setError("This email is already registered, or a server error occurred. Please try logging in or contact support.");
+            } else if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
             } else {
-                setError(err.message);
+                setError("Registration failed. Please try again later.");
             }
         } finally {
             setIsLoading(false);
