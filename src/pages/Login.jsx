@@ -61,25 +61,25 @@ const Login = () => {
 
     }
 
-    return (
-        <div className="h-screen w-full flex flex-col">
+        <div className="h-screen w-full flex flex-col bg-slate-50 relative overflow-hidden">
+            {/* Animated Background Elements */}
+            <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div>
+            <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-4000"></div>
+
             <Header />
-            <div className="flex-grow w-full relative flex items-center justify-center overflow-hidden">
-                {/* Background image with blur*/}
-                <img src={assets.login_bg} alt="Background" className="absolute inset-0 w-full h-full object-cover filter blur-sm" />
+            <div className="flex-grow w-full relative z-10 flex items-center justify-center pt-10">
 
-                <div className="relative z-10 w-full max-w-md px-6">
-
-                    <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8">
-                        <h3 className="text-2xl font-semibold text-black text-center mb-2">
+                <div className="w-full max-w-md px-6">
+                    <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl shadow-2xl p-8 transform transition-all duration-500 hover:shadow-indigo-500/20 hover:-translate-y-1">
+                        <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-800 to-indigo-600 bg-clip-text text-transparent text-center mb-2">
                             Welcome Back
                         </h3>
-                        <p className="text-sm text-slate-700 text-center mb-8">
-                            Please enter your details to login in
+                        <p className="text-sm text-slate-500 text-center mb-8 font-medium">
+                            Please enter your details to login
                         </p>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
-
+                        <form onSubmit={handleSubmit} className="space-y-5">
                             <Input
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -97,30 +97,33 @@ const Login = () => {
                             />
 
                             {error && (
-                                <p className="text-red-800 text-sm text-center bg-red-50 p-2 rounded">
+                                <div className="text-red-700 text-sm text-center bg-red-100/80 border border-red-200 p-2.5 rounded-lg animate-pulse">
                                     {error}
-                                </p>
+                                </div>
                             )}
 
-                            <button disabled={isLoading} className={`btn-primary w-full py-3 text-lg font-medium flex items-center justify-center gap-2 ${isLoading ? 'opacity-60 cursor-not-allowed': ''}`} type="submit">
-                                {isLoading ? (
-                                    <>
-                                        <LoaderCircle className="animate-spin w-5 h-5" />
-                                        Logging in...
-                                    </>
-                                ):("LOGIN")}
-                            </button>
+                            <div className="pt-2">
+                                <button disabled={isLoading} className={`btn-primary ${isLoading ? 'opacity-70 cursor-not-allowed': ''}`} type="submit">
+                                    {isLoading ? (
+                                        <div className="flex items-center justify-center gap-2">
+                                            <LoaderCircle className="animate-spin w-5 h-5 text-white" />
+                                            <span>Logging in...</span>
+                                        </div>
+                                    ) : (
+                                        "Sign In to Your Account"
+                                    )}
+                                </button>
+                            </div>
 
-                            <p className="text-sm text-slate-800 text-center mt-6">
-                                Don't have an account?
-                                <Link to="/signup" className="font-medium text-primary underline hover:text-primary-dark transition-colors">Signup</Link>
+                            <p className="text-sm text-slate-600 text-center mt-6">
+                                Don't have an account?{" "}
+                                <Link to="/signup" className="font-semibold text-indigo-600 underline decoration-indigo-300 hover:text-indigo-800 hover:decoration-indigo-600 transition-all">Signup</Link>
                             </p>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    )
 }
 
 export default Login;
