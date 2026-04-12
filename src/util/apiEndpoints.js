@@ -1,4 +1,4 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || "https://money-manager-nxqz.onrender.com/api/v1.0/";
+export const BASE_URL = import.meta.env.VITE_API_URL || "https://money-manager-app-844r.onrender.com/api/v1.0/";
 const CLOUDINARY_CLOUD_NAME = "dvhqiiasb";
 
 export const API_ENDPOINTS = {
