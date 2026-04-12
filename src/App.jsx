@@ -17,12 +17,15 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Root />} />
-                    <Route path="/home" element={<LandingPage />} />
-                    <Route path="/dashboard" element={<Home />} />
-                    <Route path="/income" element={<Income />} />
-                    <Route path="/expense" element={<Expense />} />
-                    <Route path="/category" element={<Category />} />
-                    <Route path="/filter" element={<Filter />} />
+                    
+                    {/* Protected Routes */}
+                    <Route path="/dashboard" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                    <Route path="/income" element={<ProtectedRoute><Income /></ProtectedRoute>} />
+                    <Route path="/expense" element={<ProtectedRoute><Expense /></ProtectedRoute>} />
+                    <Route path="/category" element={<ProtectedRoute><Category /></ProtectedRoute>} />
+                    <Route path="/filter" element={<ProtectedRoute><Filter /></ProtectedRoute>} />
+                    
+                    {/* Public Routes */}
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>
@@ -36,8 +39,13 @@ const Root = () => {
     return isAuthenticated ? (
         <Navigate to="/dashboard" />
     ) : (
-      <Navigate to="/home" />
+      <Navigate to="/login" />
     );
+}
+
+const ProtectedRoute = ({ children }) => {
+    const isAuthenticated = !!localStorage.getItem("token");
+    return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
 export default App;
