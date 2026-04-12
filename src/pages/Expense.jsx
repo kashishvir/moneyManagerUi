@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import {useUser} from "../hooks/useUser.jsx";
+import { useUser } from "../hooks/useUser.jsx";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS} from "../util/apiEndpoints.js";
+import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import Dashboard from "../components/Dashboard.jsx";
 import ExpenseOverview from "../components/ExpenseOverview.jsx";
 import ExpenseList from "../components/ExpenseList.jsx";
@@ -160,17 +160,7 @@ const Expense = () => {
         }
     };
 
-    const handleEmailExpenseDetails = async () => {
-        try {
-            const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_EXPENSE);
-            if(response.status === 200) {
-                toast.success("Email sent");
-            }
-        }catch (e) {
-            console.error("Error emailing expense details:", e);
-            toast.error("Failed to email expense details. Please try again.");
-        }
-    }
+
 
     useEffect(() => {
         fetchExpenseDetails();
@@ -194,7 +184,6 @@ const Expense = () => {
                             setOpenDeleteAlert({ show: true, data: id });
                         }}
                         onDownload={handleDownloadExpenseDetails}
-                        onEmail={handleEmailExpenseDetails}
                     />
 
                     <Modal
