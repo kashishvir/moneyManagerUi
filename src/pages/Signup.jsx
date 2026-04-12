@@ -62,12 +62,19 @@ const Signup = () => {
                 profileImageUrl
             })
             if (response.status === 201) {
-                toast.success("Profile created successfully.");
+                toast.success(
+                    "Account created! Check your inbox to activate it.",
+                    { duration: 6000, icon: "📧" }
+                );
                 navigate("/login");
             }
         } catch(err) {
             console.error('Something went wrong', err);
-            setError(err.message);
+            if (err.response?.status === 500) {
+                setError("This email is already registered. Please login or use a different email.");
+            } else {
+                setError(err.message || "Something went wrong. Please try again.");
+            }
         } finally {
             setIsLoading(false);
         }
