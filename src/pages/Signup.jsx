@@ -63,8 +63,8 @@ const Signup = () => {
             })
             if (response.status === 201) {
                 toast.success(
-                    `✅ Account created! A verification email has been sent to ${email}. Please check your inbox (and spam folder) to activate your account.`,
-                    { duration: 8000 }
+                    "✅ Account created successfully! You can now log in.",
+                    { duration: 4000 }
                 );
                 navigate("/login");
             }
