@@ -1,5 +1,5 @@
 import {Trash2, TrendingDown, TrendingUp, UtensilsCrossed} from "lucide-react";
-import income from "../pages/Income.jsx";
+
 import {addThousandsSeparator} from "../util/util.js";
 
 const TransactionInfoCard = ({icon, title, date, amount, type, hideDeleteBtn, onDelete}) => {

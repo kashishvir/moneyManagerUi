@@ -28,6 +28,7 @@ export const addThousandsSeparator = (num) => {
 };
 
 export const prepareIncomeLineChartData = (data = []) => {
+    if (!data || !Array.isArray(data)) return [];
     // Group data by date
     const groupedByDate = data.reduce((acc, item) => {
         const dateKey = item.date; // Assuming 'date' is in 'YYYY-MM-DD' format
