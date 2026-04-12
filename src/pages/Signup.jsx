@@ -1,12 +1,12 @@
-import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {assets} from "../assets/assets.js";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { assets } from "../assets/assets.js";
 import Input from "../components/Input.jsx";
-import {validateEmail} from "../util/validation.js";
+import { validateEmail } from "../util/validation.js";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS} from "../util/apiEndpoints.js";
+import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
-import {LoaderCircle} from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import ProfilePhotoSelector from "../components/ProfilePhotoSelector.jsx";
 import uploadProfileImage from "../util/uploadProfileImage.js";
 import Header from "../components/Header.jsx";
@@ -63,12 +63,12 @@ const Signup = () => {
             })
             if (response.status === 201) {
                 toast.success(
-                    "✅ Account created successfully! You can now log in.",
+                    "Account created successfully! You can now log in.",
                     { duration: 4000 }
                 );
                 navigate("/login");
             }
-        } catch(err) {
+        } catch (err) {
             console.error('Something went wrong', err);
             if (err.response && err.response.status === 409) {
                 setError("This email is already registered. Please login instead.");
@@ -138,7 +138,7 @@ const Signup = () => {
                                     />
                                 </div>
                             </div>
-                            
+
                             {error && (
                                 <div className="text-red-700 text-sm text-center bg-red-100/80 border border-red-200 p-2.5 rounded-lg animate-pulse mt-2">
                                     {error}
@@ -146,7 +146,7 @@ const Signup = () => {
                             )}
 
                             <div className="pt-4">
-                                <button disabled={isLoading} className={`btn-primary ${isLoading ? 'opacity-70 cursor-not-allowed': ''}`} type="submit">
+                                <button disabled={isLoading} className={`btn-primary ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`} type="submit">
                                     {isLoading ? (
                                         <div className="flex items-center justify-center gap-2">
                                             <LoaderCircle className="animate-spin w-5 h-5 text-white" />
