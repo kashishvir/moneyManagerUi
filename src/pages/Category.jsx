@@ -1,10 +1,10 @@
 import Dashboard from "../components/Dashboard.jsx";
-import {useUser} from "../hooks/useUser.jsx";
-import {Plus} from "lucide-react";
+import { useUser } from "../hooks/useUser.jsx";
+import { Plus } from "lucide-react";
 import CategoryList from "../components/CategoryList.jsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS} from "../util/apiEndpoints.js";
+import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
 import Modal from "../components/Modal.jsx";
 import AddCategoryForm from "../components/AddCategoryForm.jsx";
@@ -25,10 +25,10 @@ const Category = () => {
         try {
             const response = await axiosConfig.get(API_ENDPOINTS.GET_ALL_CATEGORIES);
             if (response.status === 200) {
-                console.log('categories',response.data);
+                console.log('categories', response.data);
                 setCategoryData(response.data);
             }
-        }catch(error) {
+        } catch (error) {
             console.error('Something went wrong. Please try again.', error);
             toast.error(error.message);
         } finally {
@@ -41,7 +41,7 @@ const Category = () => {
     }, []);
 
     const handleAddCategory = async (category) => {
-        const {name, type, icon} = category;
+        const { name, type, icon } = category;
 
         if (!name.trim()) {
             toast.error("Category Name is required");
@@ -59,13 +59,13 @@ const Category = () => {
         }
 
         try {
-            const response = await axiosConfig.post(API_ENDPOINTS.ADD_CATEGORY, {name, type, icon});
+            const response = await axiosConfig.post(API_ENDPOINTS.ADD_CATEGORY, { name, type, icon });
             if (response.status === 201) {
                 toast.success("Category added successfully");
                 setOpenAddCategoryModal(false);
                 fetchCategoryDetails();
             }
-        }catch (error) {
+        } catch (error) {
             console.error('Error adding category:', error);
             toast.error(error.response?.data?.message || "Failed to add category.");
         }
@@ -77,7 +77,7 @@ const Category = () => {
     }
 
     const handleUpdateCategory = async (updatedCategory) => {
-        const {id, name, type, icon} = updatedCategory;
+        const { id, name, type, icon } = updatedCategory;
         if (!name.trim()) {
             toast.error("Category Name is required");
             return;
@@ -88,13 +88,23 @@ const Category = () => {
             return;
         }
 
+        // Check if the category name already exists under a different ID
+        const isDuplicate = categoryData.some((cat) => {
+            return cat.id !== id && cat.name.toLowerCase() === name.trim().toLowerCase();
+        });
+
+        if (isDuplicate) {
+            toast.error("Category Name already exists");
+            return;
+        }
+
         try {
-            await axiosConfig.put(API_ENDPOINTS.UPDATE_CATEGORY(id), {name, type, icon});
+            await axiosConfig.put(API_ENDPOINTS.UPDATE_CATEGORY(id), { name, type, icon });
             setOpenEditCategoryModal(false);
             setSelectedCategory(null);
             toast.success("Category updated successfully");
             fetchCategoryDetails();
-        }catch(error) {
+        } catch (error) {
             console.error('Error updating category:', error.response?.data?.message || error.message);
             toast.error(error.response?.data?.message || "Failed to update category.");
         }
@@ -102,15 +112,19 @@ const Category = () => {
 
     return (
         <Dashboard activeMenu="Category">
-            <div className="my-5 mx-auto">
-                {/* Add button to add category*/}
-                <div className="flex justify-between items-center mb-5">
-                    <h2 className="text-2xl font-semibold">All Categories</h2>
+            <div className="my-6 max-w-[1400px] mx-auto space-y-6">
+                {/* Header Container */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/5 p-5 rounded-2xl shadow-sm backdrop-blur-md">
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Financial Categories</h1>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Create and customize categories to organize income sources and expenses.</p>
+                    </div>
                     <button
                         onClick={() => setOpenAddCategoryModal(true)}
-                        className="add-btn flex items-center gap-1">
-                        <Plus size={15} />
-                        Add Category
+                        className="add-btn self-start sm:self-auto cursor-pointer"
+                    >
+                        <Plus size={16} />
+                        <span>Add Category</span>
                     </button>
                 </div>
 
@@ -123,11 +137,12 @@ const Category = () => {
                     onClose={() => setOpenAddCategoryModal(false)}
                     title="Add Category"
                 >
-                    <AddCategoryForm onAddCategory={handleAddCategory}/>
+                    <AddCategoryForm onAddCategory={handleAddCategory} />
                 </Modal>
+
                 {/* Updating category modal*/}
                 <Modal
-                    onClose={() =>{
+                    onClose={() => {
                         setOpenEditCategoryModal(false);
                         setSelectedCategory(null);
                     }}

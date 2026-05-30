@@ -6,7 +6,6 @@ import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
 import IncomeList from "../components/IncomeList.jsx";
 import Modal from "../components/Modal.jsx";
-import { Plus } from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm.jsx";
 import DeleteAlert from "../components/DeleteAlert.jsx";
 import IncomeOverview from "../components/IncomeOverview.jsx";
@@ -32,7 +31,6 @@ const Income = () => {
         try {
             const response = await axiosConfig.get(API_ENDPOINTS.GET_ALL_INCOMES);
             if (response.status === 200) {
-                console.log("incomes", response.data);
                 setIncomeData(response.data);
             }
         } catch (error) {
@@ -48,7 +46,6 @@ const Income = () => {
         try {
             const response = await axiosConfig.get(API_ENDPOINTS.CATEGORY_BY_TYPE("income"));
             if (response.status === 200) {
-                console.log('income categories', response.data);
                 setCategories(response.data);
             }
         } catch (error) {
@@ -147,10 +144,17 @@ const Income = () => {
 
     return (
         <Dashboard activeMenu="Income">
-            <div className="my-5 mx-auto">
+            <div className="my-6 max-w-[1400px] mx-auto space-y-6">
+                {/* Header Container */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/5 p-5 rounded-2xl shadow-sm backdrop-blur-md">
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Earnings Tracker</h1>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Monitor your cash flows, log new salary/revenue items, and analyze monthly earnings.</p>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 gap-6">
                     <div>
-                        {/* overview for income with line char */}
                         <IncomeOverview transactions={incomeData} onAddIncome={() => setOpenAddIncomeModal(true)} />
                     </div>
 

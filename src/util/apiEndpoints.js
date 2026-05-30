@@ -1,4 +1,4 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || "https://money-manager-app-844r.onrender.com/api/v1.0/";
+export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api/v1.0/";
 const CLOUDINARY_CLOUD_NAME = "dvhqiiasb";
 
 export const API_ENDPOINTS = {
@@ -21,5 +21,6 @@ export const API_ENDPOINTS = {
     EMAIL_EXPENSE: "/email/expense-excel",
     APPLY_FILTERS: "/filter",
     DASHBOARD_DATA: "/dashboard",
-    UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`
+    UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    GET_AI_ADVICE: "/ai/advisor"
 }

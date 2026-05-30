@@ -1,49 +1,219 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
-body {
-  font-family: 'Outfit', sans-serif;
-  background-color: #fcfbfc;
-  overflow-x: hidden;
+:root {
+  --font-sans: 'Outfit', sans-serif;
+  
+  /* Premium Light Mode Palette */
+  --bg-app: #f5f4fb;
+  --panel-bg: rgba(255, 255, 255, 0.65);
+  --panel-border: rgba(255, 255, 255, 0.7);
+  --border-subtle: rgba(229, 231, 235, 0.5);
+  --card-bg-white: rgba(255, 255, 255, 0.5);
+  
+  --primary-glow: rgba(139, 92, 246, 0.15);
+  --secondary-glow: rgba(99, 102, 241, 0.15);
+  
+  /* Text and shadows */
+  --text-main: #1e1b2f;
+  --text-muted: #6e6b80;
+  
+  --shadow-sm: 0 2px 8px -1px rgba(31, 29, 44, 0.04), 0 1px 3px -1px rgba(31, 29, 44, 0.02);
+  --shadow-md: 0 12px 24px -4px rgba(31, 29, 44, 0.05), 0 4px 12px -2px rgba(31, 29, 44, 0.02);
+  --shadow-lg: 0 20px 40px -8px rgba(31, 29, 44, 0.08), 0 8px 16px -4px rgba(31, 29, 44, 0.04);
+  --shadow-glow: 0 0 20px 0 rgba(139, 92, 246, 0.15);
+  
+  --blob-opacity: 0.35;
 }
 
+/* Dynamic Dark Mode Override */
+.dark {
+  --bg-app: #08070d;
+  --panel-bg: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --card-bg-white: rgba(255, 255, 255, 0.03);
+  
+  --text-main: #f1f0f5;
+  --text-muted: #a2a0b1;
+  
+  --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.3), 0 1px 3px -1px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 12px 24px -4px rgba(0, 0, 0, 0.4), 0 4px 12px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 20px 40px -8px rgba(0, 0, 0, 0.5), 0 8px 16px -4px rgba(0, 0, 0, 0.3);
+  
+  --blob-opacity: 0.15;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.04) 0px, transparent 50%);
+  background-attachment: fixed;
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Adaptive Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+}
+
+p, span, label {
+  transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow-md);
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Interactive card transitions */
+.glass-card {
+  background: var(--card-bg-white);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow: var(--shadow-lg), 0 10px 20px -5px rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+/* Core components modernization */
 .input-box {
-  @apply w-full flex justify-between gap-3 text-sm text-gray-800 bg-gray-50/50 backdrop-blur-md rounded-xl px-4 py-3 mb-4 mt-3 border border-gray-200/50 outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300;
+  @apply w-full flex justify-between gap-3 text-sm rounded-xl px-4 py-3 mb-4 mt-3 border outline-none transition-all duration-300;
+  background-color: var(--card-bg-white);
+  border-color: var(--panel-border);
+  color: var(--text-main);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01);
+}
+
+.input-box:focus-within {
+  @apply border-purple-500/80 ring-4 ring-purple-500/10;
+  background-color: var(--bg-app);
+  box-shadow: 0 4px 12px -2px rgba(139, 92, 246, 0.05);
 }
 
 .btn-primary {
-  @apply w-full text-sm font-semibold text-white bg-gradient-to-r from-purple-700 to-indigo-600 shadow-lg shadow-indigo-500/30 p-[12px] rounded-xl my-1 hover:shadow-indigo-500/50 hover:scale-[1.02] active:scale-95 transition-all duration-300;
+  @apply w-full text-sm font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-700 shadow-md shadow-purple-600/20 p-[12px] rounded-xl my-1 cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-purple-600/35 hover:-translate-y-[1px] active:translate-y-[1px] active:scale-[0.99];
 }
 
 .card {
-  @apply bg-white p-6 rounded-2xl shadow-lg shadow-gray-100 border border-gray-100;
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow-md);
+  @apply p-6 rounded-2xl;
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-btn {
-  @apply flex items-center gap-3 text-[12px] font-medium text-gray-600 hover:text-purple-800 bg-gray-50 hover:bg-purple-50 px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer;
+  @apply flex items-center gap-2 text-[12px] font-semibold text-indigo-500 hover:text-indigo-400 bg-indigo-50/10 hover:bg-indigo-50/20 px-4 py-1.5 rounded-lg border border-indigo-500/10 cursor-pointer transition-all duration-300;
 }
 
 .add-btn {
-  @apply flex items-center gap-1.5 text-xs md:text-sm font-medium text-emerald-700 whitespace-nowrap bg-emerald-50/80 hover:bg-emerald-100 border border-emerald-200 rounded-xl px-4 py-2 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md;
+  @apply flex items-center gap-1.5 text-xs md:text-sm font-semibold text-white whitespace-nowrap bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-xl px-4 py-2.5 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:shadow-emerald-500/20 hover:-translate-y-[1px];
 }
 
 .add-btn-fill {
   @apply text-white bg-gradient-to-r from-purple-600 to-indigo-600 border-none shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/40;
 }
 
-/* Modern Animated Background Blobs */
+/* Custom modern scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 99px;
+  transition: all 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* Ambient animated background elements */
 @keyframes blob {
   0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
+  33% { transform: translate(40px, -60px) scale(1.15); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
   100% { transform: translate(0px, 0px) scale(1); }
 }
 .animate-blob {
-  animation: blob 7s infinite;
+  opacity: var(--blob-opacity);
+  animation: blob 10s infinite alternate ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 .animation-delay-2000 {
   animation-delay: 2s;
 }
 .animation-delay-4000 {
   animation-delay: 4s;
+}
+
+/* Premium gradient indicators */
+.mesh-balance {
+  background: radial-gradient(circle at 10% 20%, rgb(91, 33, 182) 0%, rgb(59, 130, 246) 90%);
+  color: white;
+}
+
+.mesh-income {
+  background: radial-gradient(circle at 10% 20%, rgb(6, 95, 70) 0%, rgb(16, 185, 129) 90%);
+  color: white;
+}
+
+.mesh-expense {
+  background: radial-gradient(circle at 10% 20%, rgb(159, 18, 57) 0%, rgb(239, 68, 68) 90%);
+  color: white;
+}
+
+/* Loading animations */
+.shimmer {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Modal and drop-in animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

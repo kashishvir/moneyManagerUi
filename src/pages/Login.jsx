@@ -23,7 +23,7 @@ const Login = () => {
         setIsLoading(true);
         //basic validation
         if (!validateEmail(email)) {
-            setError("Please enter valid email address");
+            setError("Please enter a valid email address");
             setIsLoading(false);
             return;
         }
@@ -62,25 +62,24 @@ const Login = () => {
     }
 
     return (
-        <div className="h-screen w-full flex flex-col bg-slate-50 relative overflow-hidden">
+        <div className="h-screen w-full flex flex-col relative overflow-hidden">
             {/* Animated Background Elements */}
-            <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div>
-            <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000"></div>
-            <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-4000"></div>
+            <div className="absolute top-0 -left-10 w-96 h-96 bg-purple-300 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-35 dark:opacity-30 animate-blob"></div>
+            <div className="absolute top-0 -right-10 w-96 h-96 bg-indigo-300 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-35 dark:opacity-30 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-16 left-20 w-96 h-96 bg-pink-300 dark:bg-pink-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob animation-delay-4000"></div>
 
             <Header />
-            <div className="flex-grow w-full relative z-10 flex items-center justify-center pt-10">
-
-                <div className="w-full max-w-md px-6">
-                    <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl shadow-2xl p-8 transform transition-all duration-500 hover:shadow-indigo-500/20 hover:-translate-y-1">
-                        <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-800 to-indigo-600 bg-clip-text text-transparent text-center mb-2">
+            <div className="flex-grow w-full relative z-10 flex items-center justify-center px-4 pt-4 pb-16">
+                <div className="w-full max-w-md">
+                    <div className="glass-panel border border-white/60 dark:border-white/5 rounded-2xl shadow-2xl p-8 transform transition-all duration-500 hover:shadow-purple-500/10 hover:-translate-y-1">
+                        <h3 className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-purple-700 via-indigo-600 to-violet-800 dark:from-purple-400 dark:via-indigo-400 dark:to-violet-450 bg-clip-text text-transparent text-center mb-2 tracking-tight">
                             Welcome Back
                         </h3>
-                        <p className="text-sm text-slate-500 text-center mb-8 font-medium">
+                        <p className="text-xs sm:text-sm text-slate-400 dark:text-gray-400 text-center mb-6 font-medium">
                             Please enter your details to login
                         </p>
 
-                        <form onSubmit={handleSubmit} className="space-y-5">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <Input
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -98,17 +97,21 @@ const Login = () => {
                             />
 
                             {error && (
-                                <div className="text-red-700 text-sm text-center bg-red-100/80 border border-red-200 p-2.5 rounded-lg animate-pulse">
+                                <div className="text-rose-700 dark:text-rose-450 text-xs text-center font-semibold bg-rose-50 dark:bg-rose-950/20 border border-rose-200/50 dark:border-rose-900/30 p-3 rounded-xl animate-pulse">
                                     {error}
                                 </div>
                             )}
 
                             <div className="pt-2">
-                                <button disabled={isLoading} className={`btn-primary ${isLoading ? 'opacity-70 cursor-not-allowed': ''}`} type="submit">
+                                <button 
+                                    disabled={isLoading} 
+                                    className={`btn-primary flex items-center justify-center ${isLoading ? 'opacity-80 cursor-not-allowed': ''}`} 
+                                    type="submit"
+                                >
                                     {isLoading ? (
                                         <div className="flex items-center justify-center gap-2">
-                                            <LoaderCircle className="animate-spin w-5 h-5 text-white" />
-                                            <span>Logging in...</span>
+                                            <LoaderCircle className="animate-spin w-4 h-4 text-white" />
+                                            <span>Signing in...</span>
                                         </div>
                                     ) : (
                                         "Sign In to Your Account"
@@ -116,9 +119,9 @@ const Login = () => {
                                 </button>
                             </div>
 
-                            <p className="text-sm text-slate-600 text-center mt-6">
+                            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 text-center mt-6 font-medium">
                                 Don't have an account?{" "}
-                                <Link to="/signup" className="font-semibold text-indigo-600 underline decoration-indigo-300 hover:text-indigo-800 hover:decoration-indigo-600 transition-all">Signup</Link>
+                                <Link to="/signup" className="font-bold text-indigo-600 dark:text-indigo-400 underline decoration-indigo-200 dark:decoration-indigo-900/50 hover:text-indigo-800 dark:hover:text-indigo-300 hover:decoration-indigo-500 dark:hover:decoration-indigo-400 transition-all ml-1">Signup</Link>
                             </p>
                         </form>
                     </div>

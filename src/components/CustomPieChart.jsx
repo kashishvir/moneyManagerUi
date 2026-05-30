@@ -20,12 +20,19 @@ const CustomPieChart = ({ data, label, totalAmount, showTextAnchor, colors }) =>
                     nameKey="name"
                     cx="50%"
                     cy="50%"
-                    outerRadius={130}
-                    innerRadius={100}
+                    outerRadius={125}
+                    innerRadius={95}
+                    cornerRadius={6}
+                    paddingAngle={4}
                     labelLine={false}
                 >
                     {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                        <Cell
+                            key={`cell-${index}`}
+                            fill={colors[index % colors.length]}
+                            stroke="rgba(255,255,255,0.4)"
+                            strokeWidth={2}
+                        />
                     ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
@@ -36,21 +43,23 @@ const CustomPieChart = ({ data, label, totalAmount, showTextAnchor, colors }) =>
                         <text
                             x="50%"
                             y="50%"
-                            dy={-25}
+                            dy={-14}
                             textAnchor="middle"
-                            fill="#666"
-                            fontSize="14px"
+                            fill="var(--text-muted)"
+                            fontSize="12px"
+                            fontWeight="700"
+                            style={{ letterSpacing: '0.05em', textTransform: 'uppercase' }}
                         >
                             {label}
                         </text>
                         <text
                             x="50%"
                             y="50%"
-                            dy={8}
+                            dy={16}
                             textAnchor="middle"
-                            fill="#333"
-                            fontSize="24px"
-                            fontWeight="semi-bold"
+                            fill="var(--text-main)"
+                            fontSize="22px"
+                            fontWeight="800"
                         >
                             {totalAmount}
                         </text>

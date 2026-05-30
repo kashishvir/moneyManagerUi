@@ -1,49 +1,57 @@
 import { useState, useEffect } from "react";
 import EmojiPickerPopup from "./EmojiPickerPopup.jsx";
 import Input from "./Input.jsx";
+import { LoaderCircle } from "lucide-react";
 
-// Add 'categories' prop
 const AddExpenseForm = ({ onAddExpense, categories }) => {
-    const [expense, setExpense] = useState({ // Renamed 'income' state to 'expense' for clarity
-        name,
-        categoryId: "", // Changed from 'category' to 'categoryId'
+    const [expense, setExpense] = useState({
+        name: "",
+        categoryId: "",
         amount: "",
         date: "",
-        icon: "", // Icon might be associated with the selected category, or kept separate for custom entries
+        icon: "",
     });
+    const [loading, setLoading] = useState(false);
 
     // Effect to set a default category if categories are loaded and none is selected
     useEffect(() => {
         if (categories && categories.length > 0 && !expense.categoryId) {
-            // Automatically select the first category as default if none is chosen
-            setExpense((prev) => ({ ...prev, categoryId: categories[0].id })); // Use categories[0].id for MySQL
+            setExpense((prev) => ({ ...prev, categoryId: categories[0].id }));
         }
     }, [categories, expense.categoryId]);
 
-    const handleChange = (key, value) => setExpense({ ...expense, [key]: value }); // Changed setIncome to setExpense
+    const handleChange = (key, value) => setExpense({ ...expense, [key]: value });
 
     // Map categories to the format expected by the reusable Input dropdown
     const categoryOptions = categories.map((cat) => ({
-        value: cat.id, // Correct for MySQL 'id'
-        label: `${cat.name}`, // Display icon and name in dropdown
+        value: cat.id,
+        label: `${cat.name}`,
     }));
 
+    const handleSubmit = async () => {
+        setLoading(true);
+        try {
+            await onAddExpense(expense);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div>
+        <div className="space-y-4">
             <EmojiPickerPopup
-                icon={expense.icon} // Uses expense.icon now
+                icon={expense.icon}
                 onSelect={(selectedIcon) => handleChange("icon", selectedIcon)}
             />
 
             <Input
                 value={expense.name}
                 onChange={({ target }) => handleChange("name", target.value)}
-                label="Income Source"
-                placeholder="e.g., Electricity, Wifi"
+                label="Expense Source / Description"
+                placeholder="e.g., Electricity, Wifi, Groceries"
                 type="text"
             />
 
-            {/* Replaced Input for 'Category' text with a dropdown for 'Category' */}
             <Input
                 label="Category"
                 value={expense.categoryId}
@@ -68,13 +76,21 @@ const AddExpenseForm = ({ onAddExpense, categories }) => {
                 type="date"
             />
 
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end pt-2">
                 <button
                     type="button"
+                    disabled={loading}
                     className="add-btn add-btn-fill"
-                    onClick={() => onAddExpense(expense)} // Changed income to expense
+                    onClick={handleSubmit}
                 >
-                    Add Expense
+                    {loading ? (
+                        <>
+                            <LoaderCircle className="w-4 h-4 animate-spin"/>
+                            Adding...
+                        </>
+                    ) : (
+                        "Add Expense"
+                    )}
                 </button>
             </div>
         </div>

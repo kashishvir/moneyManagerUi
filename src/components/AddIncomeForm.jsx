@@ -38,7 +38,7 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
     }, [categories, income.categoryId]);
 
     return (
-        <div>
+        <div className="space-y-4">
             <EmojiPickerPopup
                 icon={income.icon}
                 onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
@@ -47,7 +47,7 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
             <Input
                 value={income.name}
                 onChange={({target}) => handleChange('name', target.value)}
-                label="Income Source"
+                label="Income Source / Description"
                 placeholder="e.g., Salary, Freelance, Bonus"
                 type="text"
             />
@@ -76,20 +76,19 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
                 type="date"
             />
 
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end pt-2">
                 <button
                     onClick={handleAddIncome}
                     disabled={loading}
-                    className="add-btn add-btn-fill">
+                    className="add-btn add-btn-fill"
+                >
                     {loading ? (
                         <>
                             <LoaderCircle className="w-4 h-4 animate-spin"/>
                             Adding...
                         </>
                     ): (
-                        <>
-                            Add Income
-                        </>
+                        "Add Income"
                     )}
                 </button>
             </div>

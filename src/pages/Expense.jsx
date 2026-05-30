@@ -160,8 +160,6 @@ const Expense = () => {
         }
     };
 
-
-
     useEffect(() => {
         fetchExpenseDetails();
         fetchExpenseCategories(); // Fetch categories when component mounts
@@ -169,9 +167,17 @@ const Expense = () => {
 
     return (
         <Dashboard activeMenu="Expense">
-            <div className="my-5 mx-auto">
+            <div className="my-6 max-w-[1400px] mx-auto space-y-6">
+                {/* Header Container */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/5 p-5 rounded-2xl shadow-sm backdrop-blur-md">
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Expense Tracker</h1>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Monitor your outgoing cash flows, log new spendings, and analyze transaction trends.</p>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 gap-6">
-                    <div className="">
+                    <div>
                         <ExpenseOverview
                             transactions={expenseData}
                             onExpenseIncome={() => setOpenAddExpenseModal(true)}
