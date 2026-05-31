@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const AiCoach = () => {
     useUser();
     const [apiKey, setApiKey] = useState(localStorage.getItem("gemini_key") || "");
+    const [settingsTab, setSettingsTab] = useState("connection");
     const [tempKey, setTempKey] = useState(localStorage.getItem("gemini_key") || "");
     const [audit, setAudit] = useState(localStorage.getItem("ai_audit") || "");
     const [auditLoading, setAuditLoading] = useState(false);
@@ -212,43 +213,111 @@ const AiCoach = () => {
                         
                         {/* API Config Card */}
                         <div className="card">
-                            <div className="flex items-center gap-2 mb-4 border-b border-gray-100/50 dark:border-white/5 pb-2">
-                                <Key className="text-purple-500" size={18} />
-                                <h4 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">AI Settings</h4>
-                            </div>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
-                                Get your free **Gemini API Key** from <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer" className="text-purple-600 dark:text-purple-400 underline font-semibold">Google AI Studio</a> to unlock advanced automated insights without hosting costs.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-3">
-                                <div className="relative flex-1">
-                                    <input
-                                        type="password"
-                                        placeholder="Paste your Google AI Studio API Key..."
-                                        value={tempKey}
-                                        onChange={(e) => setTempKey(e.target.value)}
-                                        className="w-full text-xs sm:text-sm bg-white/40 dark:bg-white/5 border border-gray-200/20 dark:border-white/5 rounded-xl px-4 py-3 outline-none focus:border-purple-500/80 focus:ring-4 focus:ring-purple-500/10 transition-all duration-300 pr-10 text-gray-800 dark:text-gray-100"
-                                    />
-                                    {apiKey && (
-                                        <div className="absolute right-3.5 top-3.5 w-2 h-2 rounded-full bg-emerald-500 shadow-sm" />
-                                    )}
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100/50 dark:border-white/5 pb-3 mb-4 gap-2">
+                                <div className="flex items-center gap-2">
+                                    <Key className="text-purple-500" size={18} />
+                                    <h4 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">AI Settings</h4>
                                 </div>
-                                <div className="flex gap-2 shrink-0">
-                                    <button
-                                        onClick={handleSaveKey}
-                                        className="px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold text-xs sm:text-sm rounded-xl cursor-pointer shadow-md transition-all duration-300 active:scale-95"
+                                <div className="flex bg-gray-100/60 dark:bg-white/5 p-1 rounded-xl border border-gray-200/10 dark:border-white/5 select-none self-start sm:self-auto">
+                                    <button 
+                                        onClick={() => setSettingsTab("connection")}
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-300 ${
+                                            settingsTab === "connection"
+                                                ? "bg-white dark:bg-white/10 text-purple-600 dark:text-purple-400 shadow-sm border border-purple-500/10"
+                                                : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                                        }`}
                                     >
-                                        Save Key
+                                        <Key size={12} />
+                                        <span>Connection</span>
                                     </button>
-                                    {apiKey && (
-                                        <button
-                                            onClick={handleClearKey}
-                                            className="px-4 py-3 border border-rose-500/20 bg-rose-500/5 hover:bg-rose-500/10 text-rose-500 font-semibold text-xs sm:text-sm rounded-xl cursor-pointer transition-all duration-300 active:scale-95"
-                                        >
-                                            Disconnect
-                                        </button>
-                                    )}
+                                    <button 
+                                        onClick={() => setSettingsTab("docs")}
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-300 ${
+                                            settingsTab === "docs"
+                                                ? "bg-white dark:bg-white/10 text-purple-600 dark:text-purple-400 shadow-sm border border-purple-500/10"
+                                                : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                                        }`}
+                                    >
+                                        <HelpCircle size={12} />
+                                        <span>Documentation</span>
+                                    </button>
                                 </div>
                             </div>
+
+                            {settingsTab === "connection" && (
+                                <div className="space-y-4 animate-fade-in">
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+                                        Configure your Google AI Engine access key below. Once saved, your key resides securely in your local browser storage and is never sent to any third-party analytics trackers.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <div className="relative flex-1">
+                                            <input
+                                                type="password"
+                                                placeholder="Paste your Google AI Studio API Key..."
+                                                value={tempKey}
+                                                onChange={(e) => setTempKey(e.target.value)}
+                                                className="w-full text-xs sm:text-sm bg-white/40 dark:bg-white/5 border border-gray-200/20 dark:border-white/5 rounded-xl px-4 py-3 outline-none focus:border-purple-500/80 focus:ring-4 focus:ring-purple-500/10 transition-all duration-300 pr-10 text-gray-800 dark:text-gray-100"
+                                            />
+                                            {apiKey && (
+                                                <div className="absolute right-3.5 top-3.5 w-2 h-2 rounded-full bg-emerald-500 shadow-sm animate-pulse" />
+                                            )}
+                                        </div>
+                                        <div className="flex gap-2 shrink-0">
+                                            <button
+                                                onClick={handleSaveKey}
+                                                className="px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold text-xs sm:text-sm rounded-xl cursor-pointer shadow-md transition-all duration-300 active:scale-95"
+                                            >
+                                                Save Key
+                                            </button>
+                                            {apiKey && (
+                                                <button
+                                                    onClick={handleClearKey}
+                                                    className="px-4 py-3 border border-rose-500/20 bg-rose-500/5 hover:bg-rose-500/10 text-rose-500 font-semibold text-xs sm:text-sm rounded-xl cursor-pointer transition-all duration-300 active:scale-95"
+                                                >
+                                                    Disconnect
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {settingsTab === "docs" && (
+                                <div className="space-y-4 animate-fade-in">
+                                    <div className="p-4.5 rounded-xl bg-purple-500/5 border border-purple-500/10 text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-medium">
+                                        <p className="font-bold text-gray-900 dark:text-white mb-3 text-xs sm:text-sm flex items-center gap-1.5">
+                                            <Sparkles size={14} className="text-purple-500 shrink-0" />
+                                            How to obtain a free Gemini API Key:
+                                        </p>
+                                        <ol className="space-y-2.5 list-decimal list-inside pl-0.5 text-[11px] sm:text-xs">
+                                            <li className="marker:text-purple-500 font-medium">
+                                                Navigate to <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline font-bold inline-flex items-center gap-0.5">Google AI Studio <ChevronRight size={10} className="inline shrink-0" /></a> and authenticate with your standard Google Account.
+                                            </li>
+                                            <li className="marker:text-purple-500 font-medium">
+                                                Click the primary blue **"Get API key"** or **"Create API Key"** button positioned in the left navigation sidebar.
+                                            </li>
+                                            <li className="marker:text-purple-500 font-medium">
+                                                Select **"Create API Key in new project"** (or choose an existing cloud resource project).
+                                            </li>
+                                            <li className="marker:text-purple-500 font-medium">
+                                                **Copy** the generated key hash (a string starting with `AIzaSy...`).
+                                            </li>
+                                            <li className="marker:text-purple-500 font-medium">
+                                                Switch back to the **"Connection"** tab above, paste the copied key into the password field, and click **"Save Key"**!
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    
+                                    <div className="flex items-center gap-3 p-3.5 rounded-xl bg-indigo-500/5 border border-indigo-500/10 text-[11px] sm:text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                                        <div className="w-6 h-6 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
+                                            <HelpCircle size={14} />
+                                        </div>
+                                        <p className="leading-snug">
+                                            <strong>Pro Tip:</strong> Google Gemini 1.5 Flash offers a completely free tier. No subscription or billing info is required to obtain your key!
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Automated Saving Audit Card */}
