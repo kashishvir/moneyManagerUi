@@ -1,9 +1,9 @@
-import {useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import Dashboard from "../components/Dashboard.jsx";
-import {useUser} from "../hooks/useUser.jsx";
-import {Sparkles, Key, MessageSquare, Send, BrainCircuit, RefreshCw, ChevronRight, HelpCircle, CheckCircle} from "lucide-react";
+import { useUser } from "../hooks/useUser.jsx";
+import { Sparkles, Key, MessageSquare, Send, BrainCircuit, RefreshCw, ChevronRight, HelpCircle, CheckCircle } from "lucide-react";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS} from "../util/apiEndpoints.js";
+import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
 
 const AiCoach = () => {
@@ -13,7 +13,7 @@ const AiCoach = () => {
     const [tempKey, setTempKey] = useState(localStorage.getItem("gemini_key") || "");
     const [audit, setAudit] = useState(localStorage.getItem("ai_audit") || "");
     const [auditLoading, setAuditLoading] = useState(false);
-    
+
     // Chat states
     const [chatHistory, setChatHistory] = useState([
         {
@@ -115,7 +115,7 @@ const AiCoach = () => {
     // Custom Markdown formatter to render stunning blocks without dependency overhead
     const renderStyledText = (rawText) => {
         if (!rawText) return null;
-        
+
         const lines = rawText.split("\n");
         return lines.map((line, idx) => {
             let processedLine = line;
@@ -168,8 +168,8 @@ const AiCoach = () => {
 
             // Normal text
             return (
-                <p key={idx} className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 my-1 leading-relaxed" 
-                   dangerouslySetInnerHTML={{ __html: parseBoldText(processedLine) }} 
+                <p key={idx} className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 my-1 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: parseBoldText(processedLine) }}
                 />
             );
         });
@@ -210,7 +210,7 @@ const AiCoach = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                     {/* Left Column: API Setup and Audit Result (Spans 7 Cols) */}
                     <div className="lg:col-span-7 space-y-6">
-                        
+
                         {/* API Config Card */}
                         <div className="card">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100/50 dark:border-white/5 pb-3 mb-4 gap-2">
@@ -219,24 +219,22 @@ const AiCoach = () => {
                                     <h4 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">AI Settings</h4>
                                 </div>
                                 <div className="flex bg-gray-100/60 dark:bg-white/5 p-1 rounded-xl border border-gray-200/10 dark:border-white/5 select-none self-start sm:self-auto">
-                                    <button 
+                                    <button
                                         onClick={() => setSettingsTab("connection")}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-300 ${
-                                            settingsTab === "connection"
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-300 ${settingsTab === "connection"
                                                 ? "bg-white dark:bg-white/10 text-purple-600 dark:text-purple-400 shadow-sm border border-purple-500/10"
                                                 : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                                        }`}
+                                            }`}
                                     >
                                         <Key size={12} />
                                         <span>Connection</span>
                                     </button>
-                                    <button 
+                                    <button
                                         onClick={() => setSettingsTab("docs")}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-300 ${
-                                            settingsTab === "docs"
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all duration-300 ${settingsTab === "docs"
                                                 ? "bg-white dark:bg-white/10 text-purple-600 dark:text-purple-400 shadow-sm border border-purple-500/10"
                                                 : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                                        }`}
+                                            }`}
                                     >
                                         <HelpCircle size={12} />
                                         <span>Documentation</span>
@@ -294,10 +292,10 @@ const AiCoach = () => {
                                                 Navigate to <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline font-bold inline-flex items-center gap-0.5">Google AI Studio <ChevronRight size={10} className="inline shrink-0" /></a> and authenticate with your standard Google Account.
                                             </li>
                                             <li className="marker:text-purple-500 font-medium">
-                                                Click the primary blue **"Get API key"** or **"Create API Key"** button positioned in the left navigation sidebar.
+                                                Click the **"Get API key"** or **"Create API Key"** button.
                                             </li>
                                             <li className="marker:text-purple-500 font-medium">
-                                                Select **"Create API Key in new project"** (or choose an existing cloud resource project).
+                                                If you want to create a new API key, click **"Create API key"** (or you can copy an existing API key from your list).
                                             </li>
                                             <li className="marker:text-purple-500 font-medium">
                                                 **Copy** the generated key hash (a string starting with `AIzaSy...`).
@@ -307,7 +305,7 @@ const AiCoach = () => {
                                             </li>
                                         </ol>
                                     </div>
-                                    
+
                                     <div className="flex items-center gap-3 p-3.5 rounded-xl bg-indigo-500/5 border border-indigo-500/10 text-[11px] sm:text-xs text-indigo-600 dark:text-indigo-400 font-medium">
                                         <div className="w-6 h-6 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
                                             <HelpCircle size={14} />
@@ -392,7 +390,7 @@ const AiCoach = () => {
                     {/* Right Column: Q&A Financial Coach Chat (Spans 5 Cols) */}
                     <div className="lg:col-span-5">
                         <div className="card h-[692px] flex flex-col justify-between p-5 relative overflow-hidden">
-                            
+
                             {/* Chat Header */}
                             <div className="flex items-center gap-2.5 border-b border-gray-100/50 dark:border-white/5 pb-3.5 mb-4 shrink-0">
                                 <div className="w-9 h-9 flex items-center justify-center bg-indigo-500/10 border border-indigo-500/25 rounded-xl text-indigo-600 dark:text-indigo-400 shadow-sm shrink-0">
@@ -408,22 +406,20 @@ const AiCoach = () => {
                             <div className="flex-1 overflow-y-auto pr-1 space-y-3.5 custom-scrollbar mb-4">
                                 {chatHistory.map((msg, idx) => (
                                     <div key={idx} className={`flex items-start gap-2.5 max-w-[90%] ${msg.sender === "user" ? "ml-auto flex-row-reverse" : "mr-auto"}`}>
-                                        
+
                                         {/* Sender Avatar */}
-                                        <div className={`w-7.5 h-7.5 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${
-                                            msg.sender === "user" 
+                                        <div className={`w-7.5 h-7.5 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${msg.sender === "user"
                                                 ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border border-white/20 shadow-sm"
                                                 : "bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400"
-                                        }`}>
+                                            }`}>
                                             {msg.sender === "user" ? "ME" : "AI"}
                                         </div>
 
                                         {/* Chat bubble body */}
-                                        <div className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed border shadow-sm ${
-                                            msg.sender === "user"
+                                        <div className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed border shadow-sm ${msg.sender === "user"
                                                 ? "bg-purple-600 text-white border-purple-500/20 rounded-tr-none font-medium"
                                                 : "bg-white/50 dark:bg-white/5 text-gray-800 dark:text-gray-200 border-gray-150/40 dark:border-white/5 rounded-tl-none"
-                                        }`}>
+                                            }`}>
                                             {msg.sender === "ai" ? (
                                                 <div className="space-y-1">{renderStyledText(msg.text)}</div>
                                             ) : (
